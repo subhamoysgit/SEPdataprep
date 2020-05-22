@@ -10,8 +10,10 @@ import requests
 from bs4 import BeautifulSoup
 import julian
 from datetime import datetime
-  
+
+###local folder to save the data  
 root = '/Users/subhamoy/Documents/swri_projects/sep_prediction/codes/'
+###http location to access the files
 url = "https://satdat.ngdc.noaa.gov/sxi/archive/fits/"
 
 
@@ -19,16 +21,16 @@ import os
 import csv
 
 list_month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-goes_ar = ['goes12', 'goes13', 'goes14', 'goes15']
+goes_ar = ['goes12', 'goes13', 'goes14', 'goes15']  ###satellites to look for
 
-with open(root+'sepserver_goes_events_clean.csv', encoding ='ISO-8859-1') as f:
+with open(root+'sepserver_goes_events_clean.csv', encoding ='ISO-8859-1') as f:  ####read csv to loop through the event identifiers
   reader = csv.reader(f)
   for row in reader:
       if row[5][3:] in list_month:
           #print(row[1]+'-'+row[5]+'-'+row[6])
           st = str(list_month.index(row[5][3:])+1)
           #print(st.zfill(2))
-          identifier = row[1] + st.zfill(2) + row[5][:2] + row[6][:-3].zfill(2) + row[6][-2:]
+          identifier = row[1] + st.zfill(2) + row[5][:2] + row[6][:-3].zfill(2) + row[6][-2:]   ###create the identifier in YYYYMMDDHHMM format from SEP start time
           print(identifier)
 
           dt = datetime(int(identifier[:4]),
@@ -38,10 +40,10 @@ with open(root+'sepserver_goes_events_clean.csv', encoding ='ISO-8859-1') as f:
               int(identifier[10:12]),
               0,0)
           print(dt)
-          jd = julian.to_jd(dt, fmt='jd')
+          jd = julian.to_jd(dt, fmt='jd')   ###convert to julian date for easy search process
           print(jd)
           t_array = []
-          for i in range(4):
+          for i in range(4):      ####array of date folder strings
               t = julian.from_jd(jd-i, fmt='jd')
               month = str(t.month).zfill(2)
               day = str(t.day).zfill(2)   
