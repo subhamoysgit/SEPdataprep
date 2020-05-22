@@ -3,7 +3,7 @@
 """
 Created on Wed May 20 19:09:15 2020
 
-@author: subhamoy
+@author: subhamoy and andres
 """
 
 import requests 
