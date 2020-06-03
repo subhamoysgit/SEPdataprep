@@ -51,7 +51,7 @@ with open(root+'sepserver_goes_events_clean.csv', encoding ='ISO-8859-1') as f: 
               t_array.append(ar)
           print(t_array)
           for goes in goes_ar:
-              path = root + 'x_ray/' + identifier + '/' +goes
+              path = root + identifier + '/x_ray/' +goes
               for i in range(4):
                   archive_url = url + goes + '/' + t_array[i]
                   r = requests.get(archive_url)
@@ -70,10 +70,10 @@ with open(root+'sepserver_goes_events_clean.csv', encoding ='ISO-8859-1') as f: 
                               dt_l = datetime(yyyy,mm,dd,hh, mn, ss, 0)
                               jd_l = julian.to_jd(dt_l, fmt='jd')
                               if jd_l>=(jd-3) and jd_l<=jd and l[23:24]=='B':
-                                  if os.path.exists(root + 'x_ray')==False:
-                                      os.mkdir(os.path.join(root, 'x_ray/'))
-                                  if os.path.exists(root + 'x_ray/' + identifier)==False:
-                                      os.mkdir(root + 'x_ray/' + identifier)
+                                  if os.path.exists(root + identifier)==False:
+                                      os.mkdir(os.path.join(root, identifier))
+                                  if os.path.exists(root + identifier + '/x_ray/')==False:
+                                      os.mkdir(root + identifier + '/x_ray/')
                                   if os.path.exists(path)==False:
                                       os.mkdir(path)
                                   image_url = archive_url + l
